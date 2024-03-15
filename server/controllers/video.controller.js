@@ -90,7 +90,7 @@ export const subVideo=async(req,res,next)=>{
     const videolist= await Promise.all(user.subscribedTo.map((channelId)=>{
      return  Video.find({userId:channelId})
      }))
-     res.status(200).json(videolist.flat.sort((a,b)=>b.createdAt-a.createdAt))
+     res.status(200).json(videolist.flat().sort((a,b)=>b.createdAt-a.createdAt))
    } catch (error) {
     next(error)
    }
