@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { loginFaliure, loginStart, loginSuccess } from "../redux/userSlice";
-
+import {auth,provider} from "firebase.js"
 const Container = styled.div`
   display: flex;
   flex-direction: column;
