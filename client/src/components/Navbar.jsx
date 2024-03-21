@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -72,7 +72,7 @@ background-color:#999;
 `
 
 const Navbar = () => {
-
+const [open,setopen]=useState(flase)
   const {currentUser}=useSelector(state=>state.user)
   const dispatch=useDispatch();
   const logoutHandler=async (e)=>{
@@ -91,7 +91,7 @@ const Navbar = () => {
         </Search>
         {currentUser?(
           <User>
-            <VideoCallOutlinedIcon/>
+            <VideoCallOutlinedIcon onClick={()=>setopen(true)}/>
             <Avatar/>
             {currentUser.name}
             <Button onClick={logoutHandler}>Logout</Button>

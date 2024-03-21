@@ -91,61 +91,83 @@ export const unsubscribeUser=async(req,res,next)=>{
    
 
 export const likeUser=async(req,res,next)=>{
-const video=await Video.findById(req.params.videoId)
-// console.log(video);
-const arr=video.likes;
-// console.log(arr);
-const match=arr.find((element)=>element===req.user.id)
-if(!match){
- try {
-    await Video.findByIdAndUpdate(req.params.videoId,{
-        $push:{likes:req.user.id}
-    })
-    res.status(200).send("video liked succefully")
-} catch (error) {
-    next(error)
-}
-}
-else{
+    const id = req.user.id;
+    const videoId = req.params.videoId;
     try {
-        // const video=await Video.findByIdAndUpdate(req.params.videoId,{
-        //     $addToSet:{likes:req.user.id}
-        //     $pull:{dislikes:req.user.id} pulls dislikes when liked back
-        // })
-        const video=await Video.findByIdAndUpdate(req.params.videoId,{
-            $pull:{likes:req.user.id}
-        })
-        res.status(200).send("video like removed succefully")
-    } catch (error) {
-        next(error)
-}
-}
+      await Video.findByIdAndUpdate(videoId,{
+        $addToSet:{likes:id},
+        $pull:{dislikes:id}
+      })
+      res.status(200).json("The video has been liked.")
+    } catch (err) {
+      next(err);
+    }
+    // const video=await Video.findById(req.params.videoId)
+// console.log(video);
+// const arr=video.likes;
+// // console.log(arr);
+// const match=arr.find((element)=>element===req.user.id)
+// if(!match){
+//  try {
+//     await Video.findByIdAndUpdate(req.params.videoId,{
+//         $push:{likes:req.user.id}
+//     })
+//     res.status(200).send("video liked succefully")
+// } catch (error) {
+//     next(error)
+// }
+// }
+// else{
+//     try {
+//         // const video=await Video.findByIdAndUpdate(req.params.videoId,{
+//         //     $addToSet:{likes:req.user.id}
+//         //     $pull:{dislikes:req.user.id} pulls dislikes when liked back
+//         // })
+//         const video=await Video.findByIdAndUpdate(req.params.videoId,{
+//             $pull:{likes:req.user.id}
+//         })
+//         res.status(200).send("video like removed succefully")
+//     } catch (error) {
+//         next(error)
+// }
+// }
 }
 export const dislikeUser=async(req,res,next)=>{
-    const video=await Video.findById(req.params.videoId)
-    // console.log(video);
-    const match=video.dislikes.find((element)=>element===req.user.id)
-    // console.log(match)
-    if(!match){
+    const id = req.user.id;
+    const videoId = req.params.videoId;
     try {
+      await Video.findByIdAndUpdate(videoId,{
+        $addToSet:{dislikes:id},
+        $pull:{likes:id}
+      })
+      res.status(200).json("The video has been disliked.")
+  } catch (err) {
+    next(err);
+  }
+    //     const video=await Video.findById(req.params.videoId)
+//     // console.log(video);
+//     const match=video.dislikes.find((element)=>element===req.user.id)
+//     // console.log(match)
+//     if(!match){
+//     try {
 
-        await Video.findByIdAndUpdate(req.params.videoId,{
-            $push:{dislikes:req.user.id}
-        })
-        res.status(200).send("video disliked succefully")
-    } catch (error) {
-        console.log(error);
-        next(error)
-    }
-}
-else{
-    try {
-        const video=await Video.findByIdAndUpdate(req.params.videoId,{
-            $pull:{dislikes:req.user.id}
-        })
-        res.status(200).send("video disliked removed succefully")
-    } catch (error) {
-        next(error)
-    }
-}
+//         await Video.findByIdAndUpdate(req.params.videoId,{
+//             $push:{dislikes:req.user.id}
+//         })
+//         res.status(200).send("video disliked succefully")
+//     } catch (error) {
+//         console.log(error);
+//         next(error)
+//     }
+// }
+// else{
+//     try {
+//         const video=await Video.findByIdAndUpdate(req.params.videoId,{
+//             $pull:{dislikes:req.user.id}
+//         })
+//         res.status(200).send("video disliked removed succefully")
+//     } catch (error) {
+//         next(error)
+//     }
+// }
 }
