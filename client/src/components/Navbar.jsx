@@ -7,6 +7,9 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { logout } from "../redux/userSlice";
 import {useDispatch} from "react-redux"
+import Upload from "./Upload";
+import axios from "axios";
+import Cookies from "js-cookie"
 const Container = styled.div`
   position: sticky;
   top: 0;
@@ -72,17 +75,22 @@ background-color:#999;
 `
 
 const Navbar = () => {
-const [open,setopen]=useState(flase)
+const [open,setopen]=useState(false)
   const {currentUser}=useSelector(state=>state.user)
   const dispatch=useDispatch();
   const logoutHandler=async (e)=>{
    try {
+    //   Cookies.remove('*');
+ 
+
+    // await axios.post('/auth/logout')
     dispatch(logout())
    } catch (error) {
     console.log(error);
    }
   }
   return (
+    <>
     <Container>
       <Wrapper>
         <Search>
@@ -104,6 +112,8 @@ const [open,setopen]=useState(flase)
         </Link>)}
       </Wrapper>
     </Container>
+    {open && <Upload setOpen={setopen}/>}
+          </>
   );
 };
 

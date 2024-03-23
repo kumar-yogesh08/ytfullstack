@@ -20,7 +20,7 @@ export const signup=async(req,res,next)=>{
 }
 export const signin=async(req,res,next)=>{
     // console.log(req.body);
-    console.log(req.body);
+    // console.log(req.body);
 
         // try {
         //     const payload = { 
@@ -52,13 +52,26 @@ export const signin=async(req,res,next)=>{
            }
            const token=  Jwt.sign({id:user._id},process.env.JWTSECRETKEY);
            const {password,...data}=user._doc;
+           const eighthrs=8*60*60*1000;
            res.cookie("access_Token",token,{
-            httpOnly:true
+            httpOnly:true,
+            expires:new Date(Date.now()+eighthrs)
            }).status(200).json(data)
 
         } catch (err) {
      next(err)
     }
+    }
+    export const logout=async(req,res,next)=>{
+      try {
+        console.log("reached logout");
+      
+      
+        console.log("reached logout 2");
+       return res.status(200).clearCookie('access_Token',{httpOnly:true})
+      } catch (error) {
+        next()
+      }
     }
 export const sigingoogle=async(req,res,next)=>{
   try {

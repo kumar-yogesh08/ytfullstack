@@ -88,7 +88,7 @@ const handleLogin=async(e)=>{
 const handleSignup=async(e)=>{
   e.preventDefault();
   try {
-    const res=axios.post('/auth/signup',{name,email,password})
+    const res=await axios.post('/auth/signup',{name,email,password})
     console.log(res)
   } catch (error) {
     

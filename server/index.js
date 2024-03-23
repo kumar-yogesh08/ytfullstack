@@ -6,8 +6,16 @@ import authRoutes from "./routes/auth.routes.js";
 import commentRoutes from "./routes/comment.routes.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors"
 dotenv.config();
 const app=express();
+
+app.use(cors({
+    origin: "*",
+    methods: ["POST"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"]
+}))
 
 const connectDb=async()=>{
 
