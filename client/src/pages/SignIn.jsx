@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { loginFaliure, loginStart, loginSuccess } from "../redux/userSlice";
 import {auth,provider} from "../firebase.js"
 import {signInWithPopup} from "firebase/auth"
+import Cookies from "js-cookie";
 
 const Container = styled.div`
   display: flex;
@@ -76,10 +77,13 @@ const [password,setPassword]=useState("")
 const dispatch=useDispatch();
 const handleLogin=async(e)=>{
   e.preventDefault();
+  
   dispatch(loginStart())
   try {
     const res=await axios.post('/auth/signin',{name,password})
     console.log(res.data);
+    Cookies.set('name', 'value', { expires: 7, path: '' })
+    console.log("name cookie stored");
     dispatch(loginSuccess(res.data))
   } catch (error) {
     dispatch(loginFaliure())
@@ -103,6 +107,8 @@ const handlegooglesigin=async()=>{
     imgurl:result.user.photoURL
   }).then((res)=>{
     dispatch(loginSuccess(res.data))
+    Cookies.set('name', 'value', { expires: 7, path: '' })
+    console.log("name cookie stored");
   })
   }).catch((err)=>{
 dispatch(loginFaliure())

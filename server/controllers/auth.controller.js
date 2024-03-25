@@ -65,10 +65,13 @@ export const signin=async(req,res,next)=>{
     export const logout=async(req,res,next)=>{
       try {
         console.log("reached logout");
-      
-      
+      // req.cookies.remove();
+      // console.log(req);
+
         console.log("reached logout 2");
-       return res.status(200).clearCookie('access_Token',{httpOnly:true})
+        // res.clearCookie('access_Token')
+        // console.log(res);
+       return res.status(200).clearCookie('access_Token',{httpOnly:true}).send("user loggedout succefully")
       } catch (error) {
         next()
       }

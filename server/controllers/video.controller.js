@@ -107,9 +107,10 @@ try {
 }
 }
 export const search=async(req,res,next)=>{
-    const title=req.query.title
+    console.log("reachedhere");
+    const query=req.query.q
     try {
-    const videolist=await Video.find({title:{$regex:title,$options:"i"}}).limit(40)
+    const videolist=await Video.find({title:{$regex:query,$options:"i"}}).limit(40)
     res.status(200).json(videolist)
  } catch (error) {
     next(error)

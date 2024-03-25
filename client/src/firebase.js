@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {getAuth,GoogleAuthProvider} from "firebase/auth"
 const firebaseConfig = {
-  apiKey: "AIzaSyClp4n0hr5r4931TtN44mlaRqHsgJ7eP2c",
+  apiKey:VITE_REACT_APP_API_KEY,
   authDomain: "ytfullstack.firebaseapp.com",
   projectId: "ytfullstack",
   storageBucket: "ytfullstack.appspot.com",

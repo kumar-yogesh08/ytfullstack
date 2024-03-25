@@ -14,6 +14,7 @@ import axios from "axios";
 import { fetchSuccess,like,dislike } from "../redux/videoSlice";
 import { format } from "timeago.js";
 import { subscription } from "../redux/userSlice";
+import Recommendation from "../components/Recommendation";
 const Container = styled.div`
   display: flex;
   gap: 24px;
@@ -60,9 +61,7 @@ const Hr = styled.hr`
   border: 0.5px solid ${({ theme }) => theme.soft};
 `;
 
-const Recommendation = styled.div`
-  flex: 2;
-`;
+
 const Channel = styled.div`
   display: flex;
   justify-content: space-between;
@@ -125,9 +124,9 @@ const Video = () => {
   const fetchdata=async()=>{
     try {
       const videoRes=await axios.get(`/video/find/${path}`)
-      console.log(videoRes);
+      // console.log(videoRes);
       const channelRes=await axios.get(`/users/${videoRes.data.userId}`)
-      console.log(channelRes);
+      // console.log(channelRes);
       setchannel(channelRes.data)
       dispatch(fetchSuccess(videoRes.data))
     } catch (error) {
@@ -201,21 +200,9 @@ fetchdata()
         <Hr />
         <Comments videoId={currentVideo._id}/>
       </Content>
-      {/* <Recommendation>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-      </Recommendation> */}
+      {
+        <Recommendation tags={currentVideo.tags}/>
+      }
     </Container>
   );
 };
